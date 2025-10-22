@@ -17,6 +17,10 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public Usuario buscarPorLogin(String login) {
+        return usuarioRepository.findByLogiUsua(login);
+    }
+
     public Usuario buscarPorCodigo(String codiUsua) {
         Optional<Usuario> op = usuarioRepository.findById(codiUsua);
         return op.orElse(null);

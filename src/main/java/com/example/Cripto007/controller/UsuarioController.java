@@ -22,7 +22,7 @@ public class UsuarioController {
     @PostMapping
     public MensajeCredencialDTO validarUsuario(@RequestBody CredencialDTO credencialDTO) {
 
-        Usuario u=usuarioService.buscarPorCodigo(credencialDTO.getLogin());
+        Usuario u=usuarioService.buscarPorLogin(credencialDTO.getLogin());
         if(u!=null){
             if(u.getPassUsua().equals(credencialDTO.getPassword())){
                 return new MensajeCredencialDTO("ok","Credencial ok");
