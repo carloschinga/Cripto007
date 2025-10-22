@@ -1,6 +1,8 @@
 package com.example.Cripto007.controller;
 
 
+import com.example.Cripto007.dto.CredencialDTO;
+import com.example.Cripto007.dto.MensajeCredencialDTO;
 import com.example.Cripto007.entity.Usuario;
 import com.example.Cripto007.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,34 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+
+    @PostMapping
+    public MensajeCredencialDTO validarUsuario(@RequestBody CredencialDTO credencialDTO) {
+
+        Usuario u=usuarioService.buscarPorCodigo(credencialDTO.getLogin());
+        if(u!=null){
+            if(u.getPassUsua().equals(credencialDTO.getPassword())){
+                return new MensajeCredencialDTO("ok","Credencial ok");
+            }
+            else{
+                return new MensajeCredencialDTO("error","Credencial error");
+            }
+        }
+        else{
+            return new MensajeCredencialDTO("error","Credencial error");
+        }
+    }
+
+}
+    /*
+     @GetMapping("/{codiUsua}")
+    public Usuario obtenerPorCodigo(@PathVariable String codiUsua) {
+        return usuarioService.buscarPorCodigo(codiUsua);
+    }
+
     @GetMapping
     public List<Usuario> listarTodos() {
         return usuarioService.listarTodos();
-    }
-
-    @GetMapping("/{codiUsua}")
-    public Usuario obtenerPorCodigo(@PathVariable String codiUsua) {
-        return usuarioService.buscarPorCodigo(codiUsua);
     }
 
     @PostMapping
@@ -40,5 +62,4 @@ public class UsuarioController {
     @DeleteMapping("/{codiUsua}")
     public void eliminar(@PathVariable String codiUsua) {
         usuarioService.eliminar(codiUsua);
-    }
-}
+    }*/
