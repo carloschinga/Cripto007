@@ -3,6 +3,7 @@ package com.example.Cripto007.service;
 import com.example.Cripto007.entity.Usuario;
 import com.example.Cripto007.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,10 @@ public class UsuarioService {
     }
 
     public Usuario guardar(Usuario usuario) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String hash = encoder.encode(usuario.getPassUsua());
+        usuario.setPassUsua(hash);
+
         return usuarioRepository.save(usuario);
     }
 

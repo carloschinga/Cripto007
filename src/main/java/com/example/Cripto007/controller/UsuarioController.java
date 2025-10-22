@@ -18,7 +18,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-
+   /*
     @PostMapping
     public MensajeCredencialDTO validarUsuario(@RequestBody CredencialDTO credencialDTO) {
 
@@ -34,6 +34,11 @@ public class UsuarioController {
         else{
             return new MensajeCredencialDTO("error","Credencial error");
         }
+    }*/
+
+    @PostMapping
+    public Usuario guardar(@RequestBody Usuario usuario) {
+        return usuarioService.guardar(usuario);
     }
 
 }
@@ -48,10 +53,7 @@ public class UsuarioController {
         return usuarioService.listarTodos();
     }
 
-    @PostMapping
-    public Usuario guardar(@RequestBody Usuario usuario) {
-        return usuarioService.guardar(usuario);
-    }
+
 
     @PutMapping("/{codiUsua}")
     public Usuario actualizar(@PathVariable String codiUsua, @RequestBody Usuario usuario) {
