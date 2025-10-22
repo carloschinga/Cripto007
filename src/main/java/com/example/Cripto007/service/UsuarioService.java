@@ -28,9 +28,7 @@ public class UsuarioService {
     }
 
     public Usuario guardar(Usuario usuario) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String hash = encoder.encode(usuario.getPassUsua());
-        usuario.setPassUsua(hash);
+
 
         return usuarioRepository.save(usuario);
     }

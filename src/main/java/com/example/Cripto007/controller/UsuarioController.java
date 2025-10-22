@@ -6,6 +6,7 @@ import com.example.Cripto007.dto.MensajeCredencialDTO;
 import com.example.Cripto007.entity.Usuario;
 import com.example.Cripto007.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +19,15 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-   /*
+
     @PostMapping
     public MensajeCredencialDTO validarUsuario(@RequestBody CredencialDTO credencialDTO) {
 
         Usuario u=usuarioService.buscarPorLogin(credencialDTO.getLogin());
         if(u!=null){
-            if(u.getPassUsua().equals(credencialDTO.getPassword())){
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+            if(encoder.matches(credencialDTO.getPassword(), u.getPassUsua())){
                 return new MensajeCredencialDTO("ok","Credencial ok");
             }
             else{
@@ -34,15 +37,19 @@ public class UsuarioController {
         else{
             return new MensajeCredencialDTO("error","Credencial error");
         }
-    }*/
+    }
+
+
+
+}
+    /*
 
     @PostMapping
     public Usuario guardar(@RequestBody Usuario usuario) {
         return usuarioService.guardar(usuario);
     }
 
-}
-    /*
+
      @GetMapping("/{codiUsua}")
     public Usuario obtenerPorCodigo(@PathVariable String codiUsua) {
         return usuarioService.buscarPorCodigo(codiUsua);
