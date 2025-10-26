@@ -3,13 +3,16 @@ package com.example.Cripto007.dto;
 public class MensajeCredencialDTO {
     private String resultado;
     private String mensaje;
+    private String token;
 
-    public MensajeCredencialDTO(String resultado, String mensaje) {
-        this.resultado = resultado;
-        this.mensaje = mensaje;
-    }
     public MensajeCredencialDTO() {
 
+    }
+
+    public MensajeCredencialDTO(String resultado, String mensaje, String token) {
+        this.resultado = resultado;
+        this.mensaje = mensaje;
+        this.token = token;
     }
 
     public String getResultado() {
@@ -26,5 +29,13 @@ public class MensajeCredencialDTO {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

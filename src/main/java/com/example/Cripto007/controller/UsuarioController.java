@@ -5,6 +5,7 @@ import com.example.Cripto007.dto.CredencialDTO;
 import com.example.Cripto007.dto.MensajeCredencialDTO;
 import com.example.Cripto007.entity.Usuario;
 import com.example.Cripto007.service.UsuarioService;
+import com.example.Cripto007.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/api/validar-usuario")
 @CrossOrigin(origins = "*") // permite acceso desde cualquier frontend
 public class UsuarioController {
 
@@ -23,19 +24,24 @@ public class UsuarioController {
     @PostMapping
     public MensajeCredencialDTO validarUsuario(@RequestBody CredencialDTO credencialDTO) {
 
+
+        JwtTokenUtil jwtTokenUtil= new JwtTokenUtil();
+
         Usuario u=usuarioService.buscarPorLogin(credencialDTO.getLogin());
         if(u!=null){
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
             if(encoder.matches(credencialDTO.getPassword(), u.getPassUsua())){
-                return new MensajeCredencialDTO("ok","Credencial ok");
+                String token= jwtTokenUtil.generarToken(credencialDTO.getLogin());
+
+                return new MensajeCredencialDTO("ok","Credencial ok",token);
             }
             else{
-                return new MensajeCredencialDTO("error","Credencial error");
+                return new MensajeCredencialDTO("error","Credencial error","");
             }
         }
         else{
-            return new MensajeCredencialDTO("error","Credencial error");
+            return new MensajeCredencialDTO("error","Credencial error","");
         }
     }
 
